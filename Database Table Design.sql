@@ -63,7 +63,7 @@ ALTER TABLE News ADD CONSTRAINT unique_news_entry UNIQUE (ticker_symbol, publish
 CREATE INDEX idx_marketdata_lookup ON MarketData (ticker_symbol, trade_date DESC);
 CREATE INDEX idx_news_lookup ON News (ticker_symbol, publish_time DESC);
 CREATE INDEX ON NewsEmbeddings USING hnsw (embedding vector_cosine_ops);
-
+#trigger autocomplete
 CREATE OR REPLACE FUNCTION check_sentiment_and_alert()
 RETURNS TRIGGER AS $$
 BEGIN
@@ -85,6 +85,18 @@ AFTER INSERT ON NewsSentiment
 FOR EACH ROW
 EXECUTE FUNCTION check_sentiment_and_alert();
 
+#Index Optimization - Examples
 CREATE INDEX idx_news_ticker_time ON News (ticker_symbol, publish_time DESC);
-
 CREATE INDEX idx_news_embeddings_hnsw ON NewsEmbeddings  USING hnsw (embedding vector_cosine_ops) WITH (m = 16, ef_construction = 64);
+
+#hashtext input
+INSERT INTO Watchlist(user_name,user_id,ticker_symbol, action_type)
+values
+('alice',hashtext('alice'),'NVDA','ADD'),
+('alice',hashtext('alice'),'AAPL','ADD'),
+('erer',hashtext('erer'),'TSLA','ADD'),
+('erer',hashtext('erer'),'NVDA','ADD'),
+('erer',hashtext('erer'),'AAPL','ADD'),
+('bob',hashtext('bob'),'AAPL','ADD');
+ALTER TABLE Watchlist 
+ADD CONSTRAINT unique_user_event UNIQUE (user_name, ticker_symbol, action_type, event_time);
