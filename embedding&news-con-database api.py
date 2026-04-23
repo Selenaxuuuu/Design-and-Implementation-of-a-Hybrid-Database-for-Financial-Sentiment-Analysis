@@ -70,8 +70,10 @@ def dynamic_news_sync(tickers_to_watch):
                     # Sync Vector Embedding Data
                     generate_mock_embedding(cur, news_id)
 
+                    generate_mock_embedding(cur, news_id, item["title"])
+
             except Exception as e:
-                # Silently skip errors to ensure the loop continues
+                print(f"Error processing news for {symbol}: {e}") # Print the error instead of failing silently
                 continue
 
     conn.commit()
@@ -79,5 +81,12 @@ def dynamic_news_sync(tickers_to_watch):
     conn.close()
     print(f"Data Pipeline Success: News, Sentiment, and Embeddings synced at {datetime.now()}.")
 
-# Trigger the updated process
-dynamic_news_sync(active_tickers)
+
+if __name__ == "__main__":
+    print(">>> 1. Starting Market Data Sync...")
+    sync_market_data(active_tickers)  # Trigger the market data fetch (prices)
+    
+    print("\n>>> 2. Starting News and Sentiment Sync...")
+    dynamic_news_sync(active_tickers) # Trigger the news fetch
+    
+    print("\n All pipelines executed successfully!")
