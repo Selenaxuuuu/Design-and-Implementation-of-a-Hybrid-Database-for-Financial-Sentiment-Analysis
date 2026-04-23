@@ -3,7 +3,7 @@ python pgsql
 
 QuantIntel: Design and Implementation of a Hybrid Database for Financial Sentiment Analysis
 
-1. Research Objective
+-Research Objective
 
 This project builds an event-driven analytics system integrating structured financial time-series data with unstructured NLP embeddings. Moving beyond pure price-based black-box models, it leverages rigorous relational modeling and vector retrieval to quantify news sentiment and semantics, exploring statistical correlations between media sentiment and asset performance. The system features high robustness, effectively handling cold starts, data sparsity, and real-time extreme event alerts.
 
