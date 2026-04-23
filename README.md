@@ -36,7 +36,7 @@ Database (PostgreSQL)
 
 pgvector: PostgreSQL extension for storing dense vectors and executing similarity searches via Cosine Distance.
 
--Applied Database Concepts
+- Applied Database Concepts
 3NF Normalization: Strictly decouples entities. Heavy sentiment scores and vector data are separated from the main News table, maintaining referential integrity via Foreign Keys.
 
 CTEs & Dynamic Aggregation: Extensively uses WITH clauses alongside GREATEST/LEAST scalar functions and MIN() aggregations to build dynamic sliding windows. This prevents division-by-zero errors and statistical bias during the "cold start" phase of newly listed assets.
@@ -55,6 +55,6 @@ Sector Sentiment Aggregation: Multi-dimensional grouping based on GICS standards
 
 Risk & Alert Tracking: Real-time monitoring and display of CRITICAL negative market news driven by database triggers.
 
-Fuzzy Semantic Search: Bypasses traditional LIKE keyword limitations, using vector calculations to directly retrieve news clusters based on abstract concepts (e.g., "AI Innovation").
+Fuzzy Semantic Search: Bypasses traditional LIKE keyword limitations, using vector calculations to directly retrieve news clusters based on abstract concepts (e.g., "AI").
 
 Anomaly Burst Detection: Dynamically compares "past 24h news volume" against the "historical observation average" to precisely capture abnormal asset volatility signals.
